@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Common\ESDConnectionManager.cpp" />
+    <ClCompile Include="..\Common\ESDLocalizer.cpp" />
+    <ClCompile Include="..\Common\ESDUtilitiesWindows.cpp" />
+    <ClCompile Include="..\Common\main.cpp" />
+    <ClCompile Include="..\NotchStreamDeckPlugin.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\NotchOSCActions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\EPLJSONUtils.h" />
+    <ClInclude Include="..\Common\ESDBasePlugin.h" />
+    <ClInclude Include="..\Common\ESDConnectionManager.h" />
+    <ClInclude Include="..\Common\ESDLocalizer.h" />
+    <ClInclude Include="..\Common\ESDSDKDefines.h" />
+    <ClInclude Include="..\Common\ESDUtilities.h" />
+    <ClInclude Include="..\NotchStreamDeckPlugin.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\NotchOSCActions.h" />
+    <ClInclude Include="Header.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PropertyInspector">
+      <UniqueIdentifier>{06638d16-42f7-4637-a030-80e5f39b4251}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\com.elgato.notch.sdPlugin\pi.html">
+      <Filter>PropertyInspector</Filter>
+    </None>
+    <None Include="..\com.elgato.notch.sdPlugin\pi.js">
+      <Filter>PropertyInspector</Filter>
+    </None>
+    <None Include="..\com.elgato.notch.sdPlugin\manifest.json" />
+  </ItemGroup>
+</Project>
