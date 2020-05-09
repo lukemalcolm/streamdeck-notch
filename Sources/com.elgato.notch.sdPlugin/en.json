@@ -1,0 +1,8 @@
+{
+  "Description": "Controls Notch Playback.", 
+  "Name": "Notch", 
+  "com.elgato.notch.notch": {
+    "Name": "Notch", 
+    "Tooltip": "Controls Notch Playback"
+  }
+}

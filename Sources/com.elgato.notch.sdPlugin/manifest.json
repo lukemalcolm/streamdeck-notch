@@ -1,0 +1,131 @@
+{
+  "Actions": [
+    {
+      "Icon": "icon",
+      "Name": "Switch Layer",
+      "States": [
+        {
+          "Image": "switchLayer",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Switch playing Notch layer",
+      "UUID": "com.elgato.notch.switchLayer"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Restart Timeline",
+      "States": [
+        {
+          "Image": "reset",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Takes timeline back to start",
+      "UUID": "com.elgato.notch.resetTime"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Go To Time",
+      "States": [
+        {
+          "Image": "goToTime",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Takes timeline to a specified time",
+      "UUID": "com.elgato.notch.goToTime"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Play",
+      "States": [
+        {
+          "Image": "play",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Play",
+      "UUID": "com.elgato.notch.play"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Pause",
+      "States": [
+        {
+          "Image": "pause",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Play",
+      "UUID": "com.elgato.notch.pause"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Momentary OSC Button",
+      "States": [
+        {
+          "Image": "defaultImage",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "This action sends an OSC Button press",
+      "UUID": "com.elgato.notch.momentaryButton"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Toggle OSC Button",
+      "States": [
+        {
+          "Image": "defaultImage",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        },
+        {
+          "Image": "greyImage",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Toggles an OSC Value",
+      "UUID": "com.elgato.notch.toggleButton"
+    }
+  ], 
+  "SDKVersion": 2,
+  "Author": "Luke Malcolm", 
+  "PropertyInspectorPath": "pi.html", 
+  "CodePathWin": "notchStreamDeck.exe", 
+  "CodePathMac": "notchStreamDeck", 
+  "Description": "Controls Notch Runtime.", 
+  "Name": "Notch", 
+  "Icon": "pluginIcon", 
+  "URL": "https://www.notch.one", 
+  "Version": "1.2",
+  "OS": [
+    {
+        "Platform": "mac", 
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows", 
+        "MinimumVersion" : "10"
+    }
+  ],
+  "Software": 
+    {
+        "MinimumVersion" : "4.1"
+    }
+}

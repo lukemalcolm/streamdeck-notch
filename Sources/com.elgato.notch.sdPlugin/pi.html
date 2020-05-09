@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>com.elgato.notch.sdPlugin</title>
+        <link rel="stylesheet" href="css/sdpi.css">
+        <script src="pi.js"></script>
+    </head>
+    <body>
+        <div class="sdpi-wrapper hidden">
+            <div id="buttonSettings" style="visibility: hidden; height: 0px;">
+                <div class="sdpi-heading">Button Settings</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">OSC Address</div>
+                    <input class="sdpi-item-value" id="button_address" onchange="updateLocal()" value="/button_1">
+                </div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">Value</div>
+                    <input class="sdpi-item-value" type="number" id="button_value" onchange="updateLocal()" value="1.0">
+                </div>
+            </div>
+
+            <div id="layerSettings" style="visibility: hidden; height: 0px;">
+                <div class="sdpi-heading">Layer Selection</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">Layer Index</div>
+                    <input class="sdpi-item-value" type="number" min="0" step="1" id="layerIndex" onchange="updateLocal()" value="0">
+                </div>
+            </div>
+
+            <div id="timeSettings" style="visibility: hidden; height: 0px;">
+                <div class="sdpi-heading">Go To Time</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label">Time (secs)</div>
+                    <input class="sdpi-item-value" type="number" id="goToTime" onchange="updateLocal()" value="0.0">
+                </div>
+            </div>
+
+            <div class="sdpi-heading">Global Settings</div>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Target IP Address</div>
+                <input class="sdpi-item-value" id="ip" onchange="updateGlobal()" required>
+            </div>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Target Port</div>
+                <input class="sdpi-item-value" id="port" onchange="updateGlobal()" required>
+            </div>
+
+        </div>
+</body>
+</html>
