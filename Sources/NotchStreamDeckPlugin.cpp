@@ -65,7 +65,7 @@ private:
 
 NotchStreamDeckPlugin::NotchStreamDeckPlugin()
 {
-	mCpuUsageHelper = new CpuUsageHelper();
+	mRecvdSettings = false;
 	mTimer = new CallBackTimer();
 	mTimer->start(1000, [this]()
 	{
@@ -82,12 +82,6 @@ NotchStreamDeckPlugin::~NotchStreamDeckPlugin()
 		delete mTimer;
 		mTimer = nullptr;
 	}
-	
-	if(mCpuUsageHelper != nullptr)
-	{
-		delete mCpuUsageHelper;
-		mCpuUsageHelper = nullptr;
-	}
 }
 
 void NotchStreamDeckPlugin::UpdateTimer()
@@ -95,16 +89,12 @@ void NotchStreamDeckPlugin::UpdateTimer()
 	//
 	// Warning: UpdateTimer() is running in the timer thread
 	//
-	if(mConnectionManager != nullptr)
+	mReadSettingsMutex.lock();
+	if(mConnectionManager != nullptr && mRecvdSettings == false)
 	{
-		mVisibleContextsMutex.lock();
-		int currentValue = mCpuUsageHelper->GetCurrentCPUValue();
-		for (const std::string& context : mVisibleContexts)
-		{
-			//mConnectionManager->SetTitle(std::to_string(currentValue) + "%", context, kESDSDKTarget_HardwareAndSoftware);
-		}
-		mVisibleContextsMutex.unlock();
+		mConnectionManager->getGlobalSettings();
 	}
+	mReadSettingsMutex.unlock();
 }
 
 
@@ -127,21 +117,28 @@ int NotchStreamDeckPlugin::toggleAndReturn(std::string context) {
 
 void NotchStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
-	if (inAction == "com.elgato.notch.momentaryButton" || inAction == "com.elgato.notch.toggleButton") {
+	if (inAction == "com.elgato.notch.momentarybutton" || inAction == "com.elgato.notch.togglebutton" || inAction == "com.elgato.notch.textbutton") {
 		std::string button_address = inPayload["settings"]["button_address"];
-		float button_value = inPayload["settings"]["button_value"];
+		
 
-		if (inAction == "com.elgato.notch.momentaryButton") {
+		if (inAction == "com.elgato.notch.momentarybutton") {
+			float button_value = inPayload["settings"]["button_floatValue"];
 			m_notchOSCActions.sendButtonState(button_address, button_value);
 		}
 
-		if (inAction == "com.elgato.notch.toggleButton") {
+		if (inAction == "com.elgato.notch.togglebutton") {
+			float button_value = inPayload["settings"]["button_floatValue"];
 			int button_state = inPayload["state"];
 			m_notchOSCActions.sendButtonState(button_address, (float)button_state * button_value);
 		}
+
+		if (inAction == "com.elgato.notch.textbutton") {
+			std::string button_value = inPayload["settings"]["button_textValue"];
+			m_notchOSCActions.sendString(button_address, button_value);
+		}
 	}
 
-	if (inAction == "com.elgato.notch.switchLayer") {
+	if (inAction == "com.elgato.notch.switchlayer") {
 		int layerIndex = inPayload["settings"]["layerIndex"];
 		m_notchOSCActions.sendSwitchLayer(layerIndex);
 	}
@@ -154,21 +151,19 @@ void NotchStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const 
 		m_notchOSCActions.sendPause();
 	}
 
-	if (inAction == "com.elgato.notch.resetTime") {
+	if (inAction == "com.elgato.notch.resettime") {
 		m_notchOSCActions.sendReset();
 	}
 
-	if (inAction == "com.elgato.notch.goToTime") {
+	if (inAction == "com.elgato.notch.gototime") {
 		float time = inPayload["settings"]["goToTime"];
 		m_notchOSCActions.sendGoToTime(time);
 	}
-
-
 }
 
 void NotchStreamDeckPlugin::KeyUpForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
-	if (inAction == "com.elgato.notch.momentaryButton") {
+	if (inAction == "com.elgato.notch.momentarybutton") {
 		std::string button_address = inPayload["settings"]["button_address"];
 		m_notchOSCActions.sendButtonState(button_address, 0.0f);
 	}
@@ -176,18 +171,12 @@ void NotchStreamDeckPlugin::KeyUpForAction(const std::string& inAction, const st
 
 void NotchStreamDeckPlugin::WillAppearForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
-	// Remember the context
-	mVisibleContextsMutex.lock();
-	mVisibleContexts.insert(inContext);
-	mVisibleContextsMutex.unlock();
+
 }
 
 void NotchStreamDeckPlugin::WillDisappearForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
-	// Remove the context
-	mVisibleContextsMutex.lock();
-	mVisibleContexts.erase(inContext);
-	mVisibleContextsMutex.unlock();
+
 }
 
 void NotchStreamDeckPlugin::DeviceDidConnect(const std::string& inDeviceID, const json &inDeviceInfo)
@@ -203,4 +192,13 @@ void NotchStreamDeckPlugin::DeviceDidDisconnect(const std::string& inDeviceID)
 void NotchStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
 	// Nothing to do
+}
+
+void NotchStreamDeckPlugin::ReceiveGlobalSettings(const std::string& inAction, const std::string& inContext, const json& inPayload, const std::string& inDeviceID)
+{
+	m_notchOSCActions.setTargetIP(inPayload["settings"]["ip"]);
+	m_notchOSCActions.setTargetPort(inPayload["settings"]["port"]);
+	mReadSettingsMutex.lock();
+	mRecvdSettings = true;
+	mReadSettingsMutex.unlock();
 }

@@ -12,7 +12,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Switch playing Notch layer",
-      "UUID": "com.elgato.notch.switchLayer"
+      "UUID": "com.elgato.notch.switchlayer"
     },
     {
       "Icon": "icon",
@@ -26,7 +26,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Takes timeline back to start",
-      "UUID": "com.elgato.notch.resetTime"
+      "UUID": "com.elgato.notch.resettime"
     },
     {
       "Icon": "icon",
@@ -40,7 +40,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Takes timeline to a specified time",
-      "UUID": "com.elgato.notch.goToTime"
+      "UUID": "com.elgato.notch.gototime"
     },
     {
       "Icon": "icon",
@@ -82,7 +82,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "This action sends an OSC Button press",
-      "UUID": "com.elgato.notch.momentaryButton"
+      "UUID": "com.elgato.notch.momentarybutton"
     },
     {
       "Icon": "icon",
@@ -101,31 +101,43 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Toggles an OSC Value",
-      "UUID": "com.elgato.notch.toggleButton"
+      "UUID": "com.elgato.notch.togglebutton"
+    },
+    {
+      "Icon": "icon",
+      "Name": "Send OSC Text",
+      "States": [
+        {
+          "Image": "defaultImage",
+          "TitleAlignment": "middle",
+          "FontSize": "17"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Sends a OSC text value",
+      "UUID": "com.elgato.notch.textbutton"
     }
-  ], 
+  ],
   "SDKVersion": 2,
-  "Author": "Luke Malcolm", 
-  "PropertyInspectorPath": "pi.html", 
-  "CodePathWin": "notchStreamDeck.exe", 
-  "CodePathMac": "notchStreamDeck", 
-  "Description": "Controls Notch Runtime.", 
-  "Name": "Notch", 
-  "Icon": "pluginIcon", 
-  "URL": "https://www.notch.one", 
+  "Author": "Luke Malcolm",
+  "PropertyInspectorPath": "pi.html",
+  "CodePath": "notchStreamDeck.exe",
+  "Description": "Controls Notch Runtime.",
+  "Name": "Notch",
+  "Icon": "pluginIcon",
+  "URL": "https://www.notch.one",
   "Version": "1.2",
   "OS": [
     {
-        "Platform": "mac", 
-        "MinimumVersion" : "10.11"
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
     },
     {
-        "Platform": "windows", 
-        "MinimumVersion" : "10"
+      "Platform": "windows",
+      "MinimumVersion": "10"
     }
   ],
-  "Software": 
-    {
-        "MinimumVersion" : "4.1"
-    }
+  "Software": {
+    "MinimumVersion": "4.1"
+  }
 }

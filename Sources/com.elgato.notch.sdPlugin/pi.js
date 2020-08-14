@@ -2,6 +2,43 @@ let websocket = null,
     uuid = null,
     actionInfo = {};
 
+var keyUpTimer;
+
+document.addEventListener('DOMContentLoaded', function () {
+    initPropertyInspector(100);
+});
+
+function initPropertyInspector(initDelay) {
+	console.log("Initing")
+    /** expermimental carousel is not part of the DOM
+     * so let the DOM get constructed first and then
+     * inject the carousel */
+    setTimeout(function () {
+		window.addEventListener('beforeunload', function (e) {
+			console.log("Doing shutdown saves...")
+			e.preventDefault();
+			updateGlobal();
+			updateLocal();
+			// Don't set a returnValue to the event, otherwise Chromium with throw an error.
+		});
+
+    }, initDelay || 100);
+}
+
+// To instantly reflect the changes made in the UI, we need to listen to keyup events and then fire saves after a second.
+function onKeyUpSave(settingType) {
+	// When the key is raised, wait a second and then save the relevant settings.
+	clearTimeout(keyUpTimer);
+	if (settingType == 'local') {
+		f = updateLocal;
+	}
+	else {
+		f = updateGlobal;
+	}
+	keyUpTimer = setTimeout(f, 1000);
+
+}
+
 function connectElgatoStreamDeckSocket(inPort, inPropertyInspectorUUID, inRegisterEvent, inInfo, inActionInfo) {
 
     uuid = inPropertyInspectorUUID;
@@ -37,13 +74,17 @@ function connectElgatoStreamDeckSocket(inPort, inPropertyInspectorUUID, inRegist
     websocket.onmessage = function (evt) {
         // Received message from Stream Deck
         const jsonObj = JSON.parse(evt.data);
+		console.log(jsonObj.event);
+
         if (jsonObj.event === 'didReceiveSettings') {
             const payload = jsonObj.payload.settings;
             console.log(payload);
             document.getElementById('button_address').value = payload.button_address;
             document.getElementById('button_address').value == "undefined" && (document.getElementById('button_address').value = "/button_1");
-			document.getElementById('button_value').value = payload.button_value;
-            document.getElementById('button_value').value == "undefined" && (document.getElementById('button_value').value = "1.0");
+			document.getElementById('button_floatValue').value = payload.button_floatValue;
+            document.getElementById('button_floatValue').value == "undefined" && (document.getElementById('button_floatValue').value = "1.0");
+			document.getElementById('button_textValue').value = payload.button_textValue;
+            document.getElementById('button_textValue').value == "undefined" && (document.getElementById('button_textValue').value = "My Text");
 			document.getElementById('layerIndex').value = payload.layerIndex;
             document.getElementById('layerIndex').value == "undefined" && (document.getElementById('layerIndex').value = "0");
 			document.getElementById('goToTime').value = payload.goToTime;
@@ -75,20 +116,32 @@ function updateView() {
 }
 
 function setAction(inAction) {
-	if (inAction == "com.elgato.notch.switchLayer") {
+	if (inAction == "com.elgato.notch.switchlayer") {
 		document.getElementById('layerSettings').style.visibility='visible';
 		document.getElementById('layerSettings').style.height='auto';
 	}
 
-	if (inAction == "com.elgato.notch.momentaryButton" || inAction == "com.elgato.notch.toggleButton") {
+	if (inAction == "com.elgato.notch.momentarybutton" || inAction == "com.elgato.notch.togglebutton") {
 		document.getElementById('buttonSettings').style.visibility='visible';
 		document.getElementById('buttonSettings').style.height='auto';
+		// Show the numeric value input.
+		document.getElementById('floatButtonSection').style.visibility='visible';
+		document.getElementById('floatButtonSection').style.height='auto';
 	}
 
-		if (inAction == "com.elgato.notch.goToTime") {
+	if (inAction == "com.elgato.notch.textbutton") {
+		document.getElementById('buttonSettings').style.visibility='visible';
+		document.getElementById('buttonSettings').style.height='auto';
+		// Show the text value input.
+		document.getElementById('textButtonSection').style.visibility='visible';
+		document.getElementById('textButtonSection').style.height='auto';
+	}
+
+	if (inAction == "com.elgato.notch.gototime") {
 		document.getElementById('timeSettings').style.visibility='visible';
 		document.getElementById('timeSettings').style.height='auto';
 	}
+
 }
 
 function updateLocal() {
@@ -96,7 +149,8 @@ function updateLocal() {
     if (websocket && (websocket.readyState === 1)) {
         let payload = {};
         payload.button_address = document.getElementById('button_address').value;
-		payload.button_value = parseFloat(document.getElementById('button_value').value);
+		payload.button_floatValue = parseFloat(document.getElementById('button_floatValue').value);
+		payload.button_textValue = document.getElementById('button_textValue').value;
 		payload.layerIndex = parseInt(document.getElementById('layerIndex').value);
 		payload.goToTime = parseFloat(document.getElementById('goToTime').value);
         const json = {

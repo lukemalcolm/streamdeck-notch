@@ -33,8 +33,12 @@ public:
 	NotchOSCActions();
 	~NotchOSCActions();
 
+	bool setTargetIP(std::string ip);
+	bool setTargetPort(std::string port);
+
 	bool sendSingleFloat(std::string oscAddress, float value);
 	bool sendSingleInt(std::string oscAddress, int value);
+	bool sendString(std::string oscAddress, std::string value);
 	bool sendNoValue(std::string oscAddress);
 
 	bool sendButtonState(std::string buttonNumber, float value);

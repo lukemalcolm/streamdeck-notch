@@ -38,15 +38,17 @@ public:
 	
 	void SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID) override;
 
+	void ReceiveGlobalSettings(const std::string& inAction, const std::string& inContext, const json& inPayload, const std::string& inDeviceID) override;
+
 private:
 	
 	void UpdateTimer();
 	
-	std::mutex mVisibleContextsMutex;
-	std::set<std::string> mVisibleContexts;
-	
-	CpuUsageHelper *mCpuUsageHelper = nullptr;
+	std::mutex mReadSettingsMutex;
+	bool mRecvdSettings;
+
 	CallBackTimer *mTimer;
+
 
 	NotchOSCActions m_notchOSCActions;
 

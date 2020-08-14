@@ -16,6 +16,7 @@
 
 #include "NotchOSCActions.h"
 #include "Vendor/asio/include/asio.hpp"
+#include <stdexcept>  
 
 using namespace asio;
 
@@ -64,6 +65,34 @@ NotchOSCActions::~NotchOSCActions() {
 
 }
 
+bool NotchOSCActions::setTargetIP(std::string ip) {
+	std::string ValidIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
+	std::string ValidHostnameRegex = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$";
+
+	m_targetIP = ip;
+	return true;
+}
+
+bool NotchOSCActions::setTargetPort(std::string port) {
+	try
+	{
+		int safePort = std::stoi(port);
+		m_targetPort = safePort;
+		return true;
+
+	}
+	catch (const std::invalid_argument& e)
+	{
+		(void)e;
+		return false;
+	}
+	catch (const std::out_of_range& e)
+	{
+		(void)e;
+		return false;
+	}	
+}
+
 bool NotchOSCActions::sendPacket(std::string ipAddress, int port, char* buffer, int packetSize) {
 	io_service m_io_service;
 	ip::udp::socket m_socket(m_io_service);
@@ -107,6 +136,23 @@ bool NotchOSCActions::sendSingleInt(std::string oscAddress, int value) {
 		.openBundle(1234ULL)
 		.openMessage(oscAddress.c_str(), 1)
 		.int32(value)
+		.closeMessage()
+		.closeBundle();
+
+	this->sendPacket(m_targetIP, m_targetPort, &myBuffer[0], packet.size());
+
+	return true;
+}
+
+bool NotchOSCActions::sendString(std::string oscAddress, std::string value) {
+	const int bufferSize = 4096;
+	char myBuffer[bufferSize];
+
+	OSCPP::Client::Packet packet(&myBuffer[0], bufferSize);
+	packet
+		.openBundle(1234ULL)
+		.openMessage(oscAddress.c_str(), 1)
+		.string(value.c_str())
 		.closeMessage()
 		.closeBundle();
 

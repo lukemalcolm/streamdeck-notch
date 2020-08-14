@@ -38,6 +38,7 @@ public:
 	void Run();
 	
 	// API to communicate with the Stream Deck application
+	void getGlobalSettings();
 	void SetTitle(const std::string &inTitle, const std::string& inContext, ESDSDKTarget inTarget);
 	void SetImage(const std::string &inBase64ImageString, const std::string& inContext, ESDSDKTarget inTarget);
 	void ShowAlertForContext(const std::string& inContext);
