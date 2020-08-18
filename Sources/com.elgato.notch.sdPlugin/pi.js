@@ -114,32 +114,37 @@ function updateView() {
 		document.getElementById('initial_toggle_value').style.visibility='visible';
 	}*/
 }
+function makeVisible(id) {
+		document.getElementById(id).style.visibility='visible';
+		document.getElementById(id).style.height='auto';
+}
 
 function setAction(inAction) {
-	if (inAction == "com.elgato.notch.switchlayer") {
-		document.getElementById('layerSettings').style.visibility='visible';
-		document.getElementById('layerSettings').style.height='auto';
-	}
-
 	if (inAction == "com.elgato.notch.momentarybutton" || inAction == "com.elgato.notch.togglebutton") {
-		document.getElementById('buttonSettings').style.visibility='visible';
-		document.getElementById('buttonSettings').style.height='auto';
+
+		makeVisible('buttonSettings');
 		// Show the numeric value input.
-		document.getElementById('floatButtonSection').style.visibility='visible';
-		document.getElementById('floatButtonSection').style.height='auto';
+		makeVisible('floatButtonSection');
 	}
 
 	if (inAction == "com.elgato.notch.textbutton") {
-		document.getElementById('buttonSettings').style.visibility='visible';
-		document.getElementById('buttonSettings').style.height='auto';
+		makeVisible('buttonSettings');
 		// Show the text value input.
-		document.getElementById('textButtonSection').style.visibility='visible';
-		document.getElementById('textButtonSection').style.height='auto';
+		makeVisible('textButtonSection');
+	}
+	
+	if (inAction == "com.elgato.notch.switchlayer") {
+		makeVisible('layerSettings');
+		makeVisible('standalone-only');
 	}
 
 	if (inAction == "com.elgato.notch.gototime") {
-		document.getElementById('timeSettings').style.visibility='visible';
-		document.getElementById('timeSettings').style.height='auto';
+		makeVisible('timeSettings');
+		makeVisible('standalone-only');
+	}
+
+	if (inAction == "com.elgato.notch.play" || inAction == "com.elgato.notch.pause" || inAction =="com.elgato.notch.resettime") {
+		makeVisible('standalone-only');
 	}
 
 }

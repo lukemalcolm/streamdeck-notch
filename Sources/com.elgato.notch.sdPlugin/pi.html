@@ -8,7 +8,12 @@
     </head>
     <body>
 
-        <div class="sdpi-wrapper hidden">
+        <div class="sdpi-wrapper hidden" >
+
+            <details id="standalone-only" class="message info" style="visibility: hidden; height: 0px;">
+                <summary>This command only works in Notch Standalone (not Builder).</summary>
+            </details>
+
             <div id="buttonSettings" style="visibility: hidden; height: 0px;">
                 <div class="sdpi-heading">Button Settings</div>
                 <div class="sdpi-item">
@@ -32,6 +37,7 @@
                     <input class="sdpi-item-value" type="number" min="0" step="1" id="layerIndex" onkeyup="onKeyUpSave('local')" onchange="updateLocal()" value="0">
                 </div>
             </div>
+
 
             <div id="timeSettings" style="visibility: hidden; height: 0px;">
                 <div class="sdpi-heading">Go To Time</div>
