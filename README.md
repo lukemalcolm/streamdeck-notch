@@ -4,9 +4,13 @@ Stream Deck Plugin for controlling Notch playback & values using OSC.
 
 This plugin enables you to control playback of Notch Standalone and send OSC values (both numbers and text) into Standalone & Builder.
 
-**IMPORTANT: Transport commands (Play, Pause, Switch Layer, Go To Time, Reset Timeline) only work in Standalone not Builder.**
+_Side note: The plugin can be used to send to any OSC device, it's just pre-configured with all the OSC addresses for Notch._
 
-# Features
+The plugin is written with: 
+* Javascript, CSS & HTML for the app GUI
+* C++ for functions of the plugin.
+
+# Plugin Features
 
 Buttons:
 
@@ -19,9 +23,9 @@ Buttons:
 * Play*
 * Pause*
 
-*Standalone Only
+** *IMPORTANT: Transport commands (Play, Pause, Switch Layer, Go To Time, Reset Timeline) only work in Standalone not Builder.**
 
-Settable target IP and Port
+The plugin allows has global settings for target IP and Port.
 
 # Configuring your Notch project
 
@@ -39,11 +43,14 @@ To monitor incoming OSC into Notch:
 1. Menu->View->Connection Monitor
 1. Pane will appear that shows inbound OSC traffic
 
-Side not: You can actually use the plugin to send to any OSC device, it's just pre-configured with all the OSC addresses for Notch.
-
 # Pre-built Plugin Releases
 
 Pre-compiled releases for Windows are at [https://github.com/lukemalcolm/streamdeck-notch/releases](https://github.com/lukemalcolm/streamdeck-notch/releases)
+
+To use: 
+1. Download the release file.
+2. Browse to it in File Explorer
+3. Double click on it to install
 
 # Compiling the project
 
@@ -51,7 +58,7 @@ At present the project is Windows only and tested for compilation on Visual Stud
 
 The VS project has two targets: Release & Debug that both build to: `Sources\com.elgato.notch.sdPlugin\notchStreamDeck.exe`
 
-To use the plugin while you must copy all files (including the .exe icons & manifest.json) within `Sources\com.elgato.notch.sdPlugin` to `C:\Program Files\Elgato\StreamDeck\Plugins\com.elgato.notch.sdPlugin`. There are two scripts DeployDebug.cmd and DeployRelease.cmd that make this quick and easy.
+To use the plugin while developing you must copy all files (including the .exe icons & manifest.json) within `Sources\com.elgato.notch.sdPlugin` to `C:\Program Files\Elgato\StreamDeck\Plugins\com.elgato.notch.sdPlugin`. There are two scripts DeployDebug.cmd and DeployRelease.cmd that make this quick and easy.
 
 NB: Stream Deck must be fully closed to be able to overwrite files in the `StreamDeck\Plugins` directory.
 
