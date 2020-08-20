@@ -12,6 +12,8 @@ The plugin is written with:
 
 _This is an unofficial opensource plugin and support is not provided by the Notch team._
 
+<img src="/IllustrationPhoto.png" width="600">
+
 # Download Plugin Releases
 
 Pre-compiled releases for Windows are at [https://github.com/lukemalcolm/streamdeck-notch/releases](https://github.com/lukemalcolm/streamdeck-notch/releases)
