@@ -10,6 +10,15 @@ The plugin is written with:
 * Javascript, CSS & HTML for the app GUI
 * C++ for functions of the plugin.
 
+# Download Plugin Releases
+
+Pre-compiled releases for Windows are at [https://github.com/lukemalcolm/streamdeck-notch/releases](https://github.com/lukemalcolm/streamdeck-notch/releases)
+
+To use: 
+1. Download the release file.
+2. Browse to it in File Explorer
+3. Double click on it to install
+
 # Plugin Features
 
 Buttons:
@@ -42,15 +51,6 @@ To monitor incoming OSC into Notch:
 
 1. Menu->View->Connection Monitor
 1. Pane will appear that shows inbound OSC traffic
-
-# Pre-built Plugin Releases
-
-Pre-compiled releases for Windows are at [https://github.com/lukemalcolm/streamdeck-notch/releases](https://github.com/lukemalcolm/streamdeck-notch/releases)
-
-To use: 
-1. Download the release file.
-2. Browse to it in File Explorer
-3. Double click on it to install
 
 # Compiling the project
 
